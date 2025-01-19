@@ -1,12 +1,10 @@
 import "./App.css";
-import { Button } from "@/components/ui/button";
-import NavBar from "./components/navbar";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <>
       <NavBar />
-      {/* <Button>Click me</Button> */}
     </>
   );
 }
