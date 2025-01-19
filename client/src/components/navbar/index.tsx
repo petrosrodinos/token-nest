@@ -3,7 +3,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const NavBar: FC = () => {
   return (
-    <div className="float-right">
+    <div className="fixed right-0 h-[60px] flex items-center px-5 z-[1000] float-right">
       <ConnectButton />
     </div>
   );

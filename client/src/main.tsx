@@ -7,8 +7,6 @@ import { WagmiProvider } from "wagmi";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { wagmiConfig } from "./lib/rainbowkit.ts";
 import "./index.css";
-import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
-import { AppSidebar } from "./components/SideBar";
 
 const queryClient = new QueryClient();
 
@@ -17,11 +15,7 @@ createRoot(document.getElementById("root")!).render(
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarTrigger />
-            <App />
-          </SidebarProvider>
+          <App />
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

@@ -1,5 +1,5 @@
 import { SquarePen, Home, Coins } from "lucide-react";
-
+import { NavLink } from "react-router";
 import {
   Sidebar,
   SidebarContent,
@@ -41,10 +41,15 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <NavLink
+                      to={item.url}
+                      className={({ isActive }) =>
+                        isActive ? "text-primary font-medium" : "text-muted-foreground"
+                      }
+                    >
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
