@@ -8,7 +8,7 @@ export const wagmiConfig = getDefaultConfig({
 });
 
 export const wagmiTheme = darkTheme({
-  accentColor: "pink",
+  accentColor: "violet",
   accentColorForeground: "white",
   fontStack: "rounded",
 });

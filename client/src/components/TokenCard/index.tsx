@@ -1,5 +1,14 @@
 import React from "react";
 import { Token } from "../../interfaces/token";
+import { Button } from "../ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
 
 interface TokenCardProps {
   token: Token;
@@ -7,23 +16,30 @@ interface TokenCardProps {
 
 const TokenCard: React.FC<TokenCardProps> = ({ token: { imageUrl, name, symbol, tokensSold } }) => {
   return (
-    <div className="border rounded-lg shadow-sm bg-card p-4 flex flex-col items-center text-center space-y-4 hover:shadow-lg transition-shadow">
-      <img src={imageUrl} alt={`${name} logo`} className="w-16 h-16 rounded-full object-cover" />
+    <Card className="hover:shadow-lg transition-shadow">
+      <CardHeader className="flex flex-col items-center">
+        <img
+          src={imageUrl}
+          alt={`${name} logo`}
+          className="w-16 h-16 rounded-full object-cover mb-4"
+        />
+        <CardTitle className="text-primary text-lg font-semibold">{name}</CardTitle>
+        <CardDescription className="text-muted-foreground text-sm">{symbol}</CardDescription>
+      </CardHeader>
 
-      <div>
-        <h3 className="text-lg font-semibold text-primary">{name}</h3>
-        <p className="text-sm text-muted-foreground">{symbol}</p>
-      </div>
+      <CardContent className="flex flex-col items-center space-y-2">
+        <div className="bg-muted rounded-md px-4 py-2 text-center">
+          <p className="text-sm font-medium text-foreground">Sold</p>
+          <p className="text-lg font-bold text-primary">{tokensSold.toLocaleString()}</p>
+        </div>
+      </CardContent>
 
-      <div className="bg-muted rounded-md px-4 py-2">
-        <p className="text-sm font-medium text-foreground">Sold</p>
-        <p className="text-lg font-bold text-primary">{tokensSold.toLocaleString()}</p>
-      </div>
-
-      <button className="mt-4 bg-primary text-white font-semibold py-2 px-6 rounded-md hover:bg-primary-dark transition-colors">
-        Buy
-      </button>
-    </div>
+      <CardFooter>
+        <Button variant="default" className="w-full">
+          Buy
+        </Button>
+      </CardFooter>
+    </Card>
   );
 };
 
