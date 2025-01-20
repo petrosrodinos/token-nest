@@ -13,6 +13,7 @@ import {
 import { Input } from "../../components/ui/input";
 import { createTokenSchema } from "../../lib/validation-schemas";
 import ContentHeader from "../../components/ContentHeader";
+import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 
 export default function CreateToken() {
   const createTokenForm = useForm<z.infer<typeof createTokenSchema>>({
@@ -24,8 +25,23 @@ export default function CreateToken() {
     },
   });
 
+  // const { isConnecting, address, isConnected, chain } = useAccount();
+
+  // const { data: hash, isPending,writeContract } = useWriteContract();
+
+  // const { isLoading: isConfirming, isSuccess: isConfirmed } =
+  //   useWaitForTransactionReceipt({
+  //     hash,
+  //   })
+
   function onSubmit(data: z.infer<typeof createTokenSchema>) {
     console.log("ASD", data);
+    // writeContract({
+    //   address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    //   abi,
+    //   functionName: 'createToken',
+    //   args: [BigInt(tokenId)],
+    // })
   }
 
   return (
