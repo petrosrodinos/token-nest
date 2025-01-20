@@ -1,5 +1,6 @@
 import { FC } from "react";
 import TokenCard from "../../components/TokenCard";
+import ContentHeader from "../../components/ContentHeader";
 
 const Market: FC = () => {
   const token: any = {
@@ -10,7 +11,12 @@ const Market: FC = () => {
     tokensSold: 1000000,
   };
   return (
-    <div>
+    <div className="w-full mt-[60px] mr-2">
+      <ContentHeader
+        title="Select Your Token"
+        description="Choose a token to invest in from the available options."
+      />
+
       <div className="p-6 gap-5 flex justify-center flex-wrap">
         <TokenCard token={token} />
         <TokenCard token={token} />

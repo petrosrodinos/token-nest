@@ -12,6 +12,7 @@ import {
 } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
 import { createTokenSchema } from "../../lib/validation-schemas";
+import ContentHeader from "../../components/ContentHeader";
 
 export default function CreateToken() {
   const createTokenForm = useForm<z.infer<typeof createTokenSchema>>({
@@ -28,23 +29,22 @@ export default function CreateToken() {
   }
 
   return (
-    <div className="w-full mt-[60px]">
-      <div className="text-center py-8 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-        <h1 className="text-4xl font-extrabold">Create Your Token</h1>
-        <p className="mt-2 text-lg font-medium">
-          Easily create your custom ERC20 tokens in just a few clicks.
-        </p>
-      </div>
+    <div className="w-full mt-[60px] mr-2">
+      <ContentHeader
+        title="Create Your Token"
+        description="Easily create your custom ERC20 tokens in just a few clicks."
+      />
+
       <Form {...createTokenForm}>
-        <form onSubmit={createTokenForm.handleSubmit(onSubmit)} className="space-y-6 mr-2">
+        <form onSubmit={createTokenForm.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={createTokenForm.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Token Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
