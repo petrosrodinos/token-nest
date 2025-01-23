@@ -1,6 +1,7 @@
 import { getDefaultConfig, darkTheme } from "@rainbow-me/rainbowkit";
 import { sepolia } from "wagmi/chains";
 import { Chain } from "@rainbow-me/rainbowkit";
+import { RAINBOW_PROJECT_ID } from "./constants";
 
 const hardhatLocal = {
   id: 31337,
@@ -28,7 +29,7 @@ const hardhatLocal = {
 
 export const wagmiConfig = getDefaultConfig({
   appName: "wagmi-tokennest",
-  projectId: "f7612d250386741b02488257e54a563c",
+  projectId: RAINBOW_PROJECT_ID,
   chains: [sepolia, hardhatLocal],
 });
 

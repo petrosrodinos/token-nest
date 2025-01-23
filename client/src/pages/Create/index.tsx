@@ -14,8 +14,8 @@ import { Input } from "../../components/ui/input";
 import { createTokenSchema } from "../../lib/validation-schemas";
 import ContentHeader from "../../components/ContentHeader";
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
-import { abi } from "../../artifacts/contracts/TokenFactory.sol/TokenFactory.json";
 import { Spinner } from "../../components/ui/spinner";
+import { TOKEN_FACTORY_CONTRACT_ADDRESS, tokenFactoryAbi } from "../../lib/contract";
 
 export default function CreateToken() {
   const createTokenForm = useForm<z.infer<typeof createTokenSchema>>({
@@ -39,8 +39,8 @@ export default function CreateToken() {
     console.log("ASD", data);
     writeContract(
       {
-        address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-        abi,
+        address: TOKEN_FACTORY_CONTRACT_ADDRESS,
+        abi: tokenFactoryAbi,
         functionName: "createToken",
         args: [data.totalSupply, data.name, data.symbol],
       },
@@ -110,7 +110,7 @@ export default function CreateToken() {
             )}
           />
           <Button disabled={isPending || isConfirming} className="float-left" type="submit">
-            Submit
+            Create
           </Button>
         </form>
       </Form>
