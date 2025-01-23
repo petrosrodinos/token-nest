@@ -5,7 +5,7 @@ import { RAINBOW_PROJECT_ID } from "./constants";
 
 const hardhatLocal = {
   id: 31337,
-  name: "Hardhat Local",
+  name: "localhost",
   iconUrl: "https://hardhat.org/favicon.ico",
   iconBackground: "#fff",
   nativeCurrency: {
