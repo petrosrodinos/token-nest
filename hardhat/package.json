@@ -5,7 +5,7 @@
     "compile": "npx hardhat compile",
     "deploy:dev": "npx hardhat ignition deploy ./ignition/modules/TokenFactory.ts --network localhost",
     "deploy:sepolia": "npx hardhat ignition deploy ./ignition/modules/TokenFactory.ts --network sepolia",
-    "run:node": "npx hardhat node"
+    "start:node": "npx hardhat node"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
