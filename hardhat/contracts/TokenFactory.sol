@@ -16,9 +16,9 @@ contract TokenFactory {
 
     constructor(){}
 
-    function createToken(address initialOwner, uint256 initialSupply, string memory name, string memory symbol) public returns (address) {
+    function createToken(uint256 initialSupply, string memory name, string memory symbol) public returns (address) {
     
-        Token newToken = new Token(initialOwner, initialSupply, name, symbol);
+        Token newToken = new Token(msg.sender, initialSupply, name, symbol);
 
         TokenStruct memory token = TokenStruct({
             tokenAddress: address(newToken),
@@ -28,7 +28,7 @@ contract TokenFactory {
 
         tokens.push(token);
 
-        emit TokenCreated(address(newToken), initialOwner, initialSupply,name,symbol);
+        emit TokenCreated(address(newToken), msg.sender, initialSupply,name,symbol);
         
         return address(newToken);
         

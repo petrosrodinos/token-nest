@@ -14,6 +14,8 @@ import { Input } from "../../components/ui/input";
 import { createTokenSchema } from "../../lib/validation-schemas";
 import ContentHeader from "../../components/ContentHeader";
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { abi } from "../../artifacts/contracts/TokenFactory.sol/TokenFactory.json";
+import { Spinner } from "../../components/ui/spinner";
 
 export default function CreateToken() {
   const createTokenForm = useForm<z.infer<typeof createTokenSchema>>({
@@ -27,21 +29,27 @@ export default function CreateToken() {
 
   // const { isConnecting, address, isConnected, chain } = useAccount();
 
-  // const { data: hash, isPending,writeContract } = useWriteContract();
+  const { data: hash, isPending, writeContract } = useWriteContract();
 
-  // const { isLoading: isConfirming, isSuccess: isConfirmed } =
-  //   useWaitForTransactionReceipt({
-  //     hash,
-  //   })
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  });
 
   function onSubmit(data: z.infer<typeof createTokenSchema>) {
     console.log("ASD", data);
-    // writeContract({
-    //   address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    //   abi,
-    //   functionName: 'createToken',
-    //   args: [BigInt(tokenId)],
-    // })
+    writeContract(
+      {
+        address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        abi,
+        functionName: "createToken",
+        args: [data.totalSupply, data.name, data.symbol],
+      },
+      {
+        onSuccess: () => {
+          createTokenForm.reset();
+        },
+      }
+    );
   }
 
   return (
@@ -51,6 +59,15 @@ export default function CreateToken() {
         description="Easily create your custom ERC20 tokens in just a few clicks."
       />
 
+      <div className="flex justify-center items-center">
+        <Spinner size="lg" loading={isPending || isConfirming} color="blue" className="mt-4" />
+      </div>
+
+      {isConfirmed && (
+        <div className="mt-2 mb-2 bg-green-500 text-white p-3 rounded-md">
+          Token created successfully
+        </div>
+      )}
       <Form {...createTokenForm}>
         <form onSubmit={createTokenForm.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -92,7 +109,7 @@ export default function CreateToken() {
               </FormItem>
             )}
           />
-          <Button className="float-left" type="submit">
+          <Button disabled={isPending || isConfirming} className="float-left" type="submit">
             Submit
           </Button>
         </form>
