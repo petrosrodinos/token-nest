@@ -3,7 +3,6 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 
 import {createClient} from 'npm:@supabase/supabase-js';
 
-
 console.log("Hello from Create Token function!");
 
 const supabase = createClient(
@@ -26,17 +25,15 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Insert the data into the 'tokens' table
     const { data, error } = await supabase
       .from('tokens')
       .insert([{ address, name, symbol, supply }])
-      .select(); // Optional: Return the inserted row
+      .select(); 
 
     if (error) {
       throw new Error(error.message);
     }
 
-    // Return a success response with the inserted data
     return new Response(
       JSON.stringify({ success: true, data }),
       { headers: { "Content-Type": "application/json" } }
