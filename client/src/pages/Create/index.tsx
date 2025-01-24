@@ -13,13 +13,10 @@ import {
 import { Input } from "../../components/ui/input";
 import { createTokenSchema } from "../../lib/validation-schemas";
 import ContentHeader from "../../components/ContentHeader";
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { Spinner } from "../../components/ui/spinner";
-import {
-  SupportedChains,
-  TOKEN_FACTORY_CONTRACT_ADDRESSES,
-  tokenFactoryAbi,
-} from "../../lib/contract";
+import { tokenFactoryAbi } from "../../lib/contract";
+import { useContractAddress } from "../../hooks/useContractAddress";
 
 export default function CreateToken() {
   const createTokenForm = useForm<z.infer<typeof createTokenSchema>>({
@@ -31,25 +28,19 @@ export default function CreateToken() {
     },
   });
 
-  const { chain } = useAccount();
-
   const { data: hash, isPending, writeContract } = useWriteContract();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
   });
 
-  const contractAddress = TOKEN_FACTORY_CONTRACT_ADDRESSES[chain?.name as SupportedChains];
-
-  if (!contractAddress) {
-    throw new Error(`Contract address not found for chain: ${chain?.name}`);
-  }
+  const contractAddress = useContractAddress();
 
   function onSubmit(data: z.infer<typeof createTokenSchema>) {
     console.log("ASD", data);
     writeContract(
       {
-        address: contractAddress as `0x${string}`,
+        address: contractAddress,
         abi: tokenFactoryAbi,
         functionName: "createToken",
         args: [data.totalSupply, data.name, data.symbol],

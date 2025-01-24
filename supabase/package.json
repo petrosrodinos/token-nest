@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "deploy": "npx supabase functions deploy createToken --project-ref lrfkvajaqhamxzdlrcwj"
+  },
   "devDependencies": {
     "supabase": "^2.6.8"
   },

@@ -1,33 +1,44 @@
-
-import "jsr:@supabase/functions-js/edge-runtime.d.ts"
-
-import {createClient} from 'npm:@supabase/supabase-js';
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from 'npm:@supabase/supabase-js';
 
 console.log("Hello from Create Token function!");
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
   Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-  // Deno.env.get("SUPABASE_ANON_KEY")!
 );
 
-
-Deno.serve(async (req) => {
+Deno.serve(async (req: any) => {
   try {
-    // Parse the request body to get the required fields
-    const { address, name, symbol, supply } = await req.json();
+    const request = await req.json();
+    const { logs } = request;
 
-    // Validate that all required fields are present
-    if (!address || !name || !symbol || !supply) {
+    const eventLog = logs[0]; 
+    const {
+      tokenAddress, 
+      owner,      
+      initialSupply, 
+      name,       
+      symbol      
+    } = eventLog.data;
+
+    console.log("EVENT DATA RECEIVED", request);
+
+    if (!tokenAddress || !initialSupply || !name || !symbol) {
       return new Response(
-        JSON.stringify({ error: "Missing required fields: address, name, symbol, or supply" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
+        JSON.stringify({ error: "Missing required fields in event data" }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
       );
     }
 
     const { data, error } = await supabase
       .from('tokens')
-      .insert([{ address, name, symbol, supply }])
+      .insert([{ 
+        address: tokenAddress, 
+        supply: initialSupply, 
+        name, 
+        symbol 
+      }])
       .select(); 
 
     if (error) {
@@ -36,14 +47,12 @@ Deno.serve(async (req) => {
 
     return new Response(
       JSON.stringify({ success: true, data }),
-      { headers: { "Content-Type": "application/json" } }
+      { status: 200, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
-    // Handle any errors
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 });
-
