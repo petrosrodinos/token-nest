@@ -6,4 +6,8 @@ export const TOKEN_FACTORY_CONTRACT_ADDRESS_LOCALHOST = import.meta.env
 export const TOKEN_FACTORY_CONTRACT_ADDRESS_SEPOLIA = import.meta.env
   .VITE_TOKEN_FACTORY_CONTRACT_ADDRESS_SEPOLIA;
 
+  export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+
+  export const SUPABASE_PUBLIC_KEY = import.meta.env.VITE_SUPABASE_PUBLIC_KEY;
+
   

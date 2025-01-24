@@ -7,7 +7,7 @@ interface TokenCardProps {
   token: Token;
 }
 
-const TokenCardBought: React.FC<TokenCardProps> = ({ token: {} }) => {
+const TokenCardStake: React.FC<TokenCardProps> = ({ token: {} }) => {
   return (
     <>
       <CardContent className="flex flex-col items-center space-y-2">
@@ -28,4 +28,4 @@ const TokenCardBought: React.FC<TokenCardProps> = ({ token: {} }) => {
   );
 };
 
-export default TokenCardBought;
+export default TokenCardStake;

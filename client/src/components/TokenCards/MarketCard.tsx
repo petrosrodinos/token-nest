@@ -7,13 +7,13 @@ interface TokenCardProps {
   token: Token;
 }
 
-const TokenCardBought: React.FC<TokenCardProps> = ({ token: { tokensSold } }) => {
+const TokenCardMarket: React.FC<TokenCardProps> = ({ token: { supply } }) => {
   return (
     <>
       <CardContent className="flex flex-col items-center space-y-2">
         <div className="bg-muted rounded-md px-4 py-2 text-center">
           <p className="text-sm font-medium text-foreground">Sold</p>
-          <p className="text-lg font-bold text-primary">{tokensSold.toLocaleString()}</p>
+          <p className="text-lg font-bold text-primary">{supply.toLocaleString()}</p>
         </div>
       </CardContent>
 
@@ -26,4 +26,4 @@ const TokenCardBought: React.FC<TokenCardProps> = ({ token: { tokensSold } }) =>
   );
 };
 
-export default TokenCardBought;
+export default TokenCardMarket;

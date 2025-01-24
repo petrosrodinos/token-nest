@@ -60,9 +60,7 @@ export default function CreateToken() {
         description="Easily create your custom ERC20 tokens in just a few clicks."
       />
 
-      <div className="flex justify-center items-center">
-        <Spinner size="lg" loading={isPending || isConfirming} color="blue" className="mt-4" />
-      </div>
+      <Spinner size="lg" loading={isPending || isConfirming} color="blue" className="mt-4" />
 
       {isConfirmed && (
         <div className="mt-2 mb-2 bg-green-500 text-white p-3 rounded-md">

@@ -12,7 +12,7 @@ const spinnerVariants = cva("relative block opacity-[0.65]", {
     },
   },
   defaultVariants: {
-    size: "sm",
+    size: "lg",
   },
 });
 
@@ -25,7 +25,7 @@ export interface SpinnerProps
 }
 
 const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
-  ({ className, size, loading = true, asChild = false, color, ...props }, ref) => {
+  ({ className, size, loading = true, asChild = false, color = "blue", ...props }, ref) => {
     const Comp = asChild ? Slot : "span";
 
     const [bgColorClass, filteredClassName] = React.useMemo(() => {
@@ -37,30 +37,32 @@ const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(
     if (!loading) return null;
 
     return (
-      <Comp
-        className={cn(spinnerVariants({ size, className: filteredClassName }))}
-        ref={ref}
-        {...props}
-      >
-        {Array.from({ length: 8 }).map((_, i) => (
-          <span
-            key={i}
-            className="absolute top-0 left-1/2 w-[12.5%] h-full animate-spinner-leaf-fade"
-            style={{
-              transform: `rotate(${i * 45}deg)`,
-              animationDelay: `${-(7 - i) * 100}ms`,
-            }}
-          >
+      <div className="mt-1 flex justify-center items-center">
+        <Comp
+          className={cn(spinnerVariants({ size, className: filteredClassName }))}
+          ref={ref}
+          {...props}
+        >
+          {Array.from({ length: 8 }).map((_, i) => (
             <span
-              className={cn(
-                "block w-full h-[30%] rounded-full",
-                bgColorClass || "bg-black dark:bg-white"
-              )}
-              style={{ backgroundColor: color || "black" }}
-            ></span>
-          </span>
-        ))}
-      </Comp>
+              key={i}
+              className="absolute top-0 left-1/2 w-[12.5%] h-full animate-spinner-leaf-fade"
+              style={{
+                transform: `rotate(${i * 45}deg)`,
+                animationDelay: `${-(7 - i) * 100}ms`,
+              }}
+            >
+              <span
+                className={cn(
+                  "block w-full h-[30%] rounded-full",
+                  bgColorClass || "bg-black dark:bg-white"
+                )}
+                style={{ backgroundColor: color || "blue" }}
+              ></span>
+            </span>
+          ))}
+        </Comp>
+      </div>
     );
   }
 );
