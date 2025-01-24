@@ -1,2 +1,3 @@
 /hardhat/node_modules
 /client/.env
+/supabase/node_modules
