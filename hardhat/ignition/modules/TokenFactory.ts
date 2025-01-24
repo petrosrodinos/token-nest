@@ -1,6 +1,6 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-const TokenFactoryModule = buildModule("TokenFactoryModule", (m) => {
+const TokenFactoryModule = buildModule("TokenFactory", (m) => {
   const tokenFactory = m.contract("TokenFactory", []);
 
   return { tokenFactory };

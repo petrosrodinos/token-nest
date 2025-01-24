@@ -28,7 +28,7 @@ export default function CreateToken() {
     },
   });
 
-  const { data: hash, isPending, writeContract } = useWriteContract();
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
@@ -68,6 +68,10 @@ export default function CreateToken() {
         <div className="mt-2 mb-2 bg-green-500 text-white p-3 rounded-md">
           Token created successfully
         </div>
+      )}
+
+      {error && (
+        <div className="mt-2 mb-2 bg-red-500 text-white p-3 rounded-md">Request was Rejected</div>
       )}
       <Form {...createTokenForm}>
         <form onSubmit={createTokenForm.handleSubmit(onSubmit)} className="space-y-6">
