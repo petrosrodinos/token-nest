@@ -4,7 +4,7 @@ pragma solidity 0.8.28;
 import "./Token.sol";
 
 contract TokenFactory {
-    event TokenCreated(address indexed tokenAddress, address indexed owner, uint256 initialSupply,string name,string symbol);
+    event TokenCreated(address tokenAddress, uint256 initialSupply,string name,string symbol);
 
     constructor(){}
 
@@ -12,7 +12,7 @@ contract TokenFactory {
     
         Token newToken = new Token(msg.sender, initialSupply, name, symbol);
 
-        emit TokenCreated(address(newToken), msg.sender, initialSupply,name,symbol);
+        emit TokenCreated(address(newToken), initialSupply,name,symbol);
         
         return address(newToken);
         

@@ -17,6 +17,7 @@ import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { Spinner } from "../../components/ui/spinner";
 import { tokenFactoryAbi } from "../../lib/contract";
 import { useContractAddress } from "../../hooks/useContractAddress";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 export default function CreateToken() {
   const createTokenForm = useForm<z.infer<typeof createTokenSchema>>({
@@ -28,6 +29,8 @@ export default function CreateToken() {
     },
   });
 
+  const { openConnectModal } = useConnectModal();
+
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
@@ -37,6 +40,10 @@ export default function CreateToken() {
   const contractAddress = useContractAddress();
 
   function onSubmit(data: z.infer<typeof createTokenSchema>) {
+    if (!contractAddress) {
+      openConnectModal?.();
+      return;
+    }
     console.log("ASD", data);
     writeContract(
       {

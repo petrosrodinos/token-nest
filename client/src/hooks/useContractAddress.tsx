@@ -8,9 +8,9 @@ export const useContractAddress = (): `0x${string}` => {
     chain?.name as SupportedChains
   ] as `0x${string}`;
 
-  if (!contractAddress) {
-    throw new Error(`Contract address not found for chain: ${chain?.name}`);
-  }
+  // if (!contractAddress) {
+  //   throw new Error(`Contract address not found for chain:`);
+  // }
 
   return contractAddress;
 };
