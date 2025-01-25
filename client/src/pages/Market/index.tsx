@@ -6,8 +6,11 @@ import MarketCard from "../../components/TokenCards/MarketCard";
 import { useSupabase } from "../../hooks/useSupabase";
 import { useEffect } from "react";
 import { Spinner } from "../../components/ui/spinner";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertTitle, AlertDescription } from "../../components/ui/alert";
+import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import Message from "../../components/Message";
+import { Token } from "../../interfaces/token";
+import { tokenAbi } from "../../lib/contract";
+import { useAccount } from "wagmi";
 
 const Market: FC = () => {
   const { getTokens, data, error, loading } = useSupabase();
@@ -16,24 +19,59 @@ const Market: FC = () => {
     getTokens();
   }, []);
 
+  const { data: hash, error: buyError, isPending, writeContract } = useWriteContract();
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash,
+  });
+
+  const { address } = useAccount();
+
+  const handleBuyToken = (token: Token, amount: string) => {
+    writeContract(
+      {
+        address: token.address as `0x${string}`,
+        abi: tokenAbi,
+        functionName: "transfer",
+        args: [address, amount],
+      },
+      {
+        onSuccess: () => {
+          getTokens();
+        },
+      }
+    );
+  };
+
   return (
     <Container>
       <ContentHeader
         title="Select Your Token"
         description="Choose a token to invest in from the available options."
       />
-      <Spinner loading={loading} color="blue" />
-      {(error || data?.length == 0) && (
-        <Alert className="mt-2" variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Warning</AlertTitle>
-          <AlertDescription>Could not get tokens,try again later.</AlertDescription>
-        </Alert>
-      )}
+      <Spinner loading={loading || isConfirming || isPending} color="blue" />
+      <Message
+        visible={!!error || data?.length == 0}
+        variant="destructive"
+        title="Warning"
+        description="Could not get tokens,try again later."
+      />
+      <Message
+        visible={!!buyError}
+        variant="destructive"
+        title="Warning"
+        description="Could not buy tokens."
+      />
+      <Message
+        visible={isConfirmed}
+        variant="success"
+        title="Success"
+        description="Tokens bought successfuly."
+      />
       <div className="p-6 gap-5 flex justify-center flex-wrap">
         {data?.map((token: any) => (
           <TokenCardLayout key={token.id} token={token}>
-            <MarketCard token={token} />
+            <MarketCard onBuyToken={handleBuyToken} token={token} />
           </TokenCardLayout>
         ))}
         {/* <TokenCardLayout token={token}>
