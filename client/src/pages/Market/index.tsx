@@ -6,11 +6,10 @@ import MarketCard from "../../components/TokenCards/MarketCard";
 import { useSupabase } from "../../hooks/useSupabase";
 import { useEffect } from "react";
 import { Spinner } from "../../components/ui/spinner";
-import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useWaitForTransactionReceipt, useWriteContract, useAccount } from "wagmi";
 import Message from "../../components/Message";
 import { Token } from "../../interfaces/token";
 import { tokenAbi } from "../../lib/contract";
-import { useAccount } from "wagmi";
 
 const Market: FC = () => {
   const { getTokens, data, error, loading } = useSupabase();
@@ -28,19 +27,12 @@ const Market: FC = () => {
   const { address } = useAccount();
 
   const handleBuyToken = (token: Token, amount: string) => {
-    writeContract(
-      {
-        address: token.address as `0x${string}`,
-        abi: tokenAbi,
-        functionName: "transfer",
-        args: [address, amount],
-      },
-      {
-        onSuccess: () => {
-          getTokens();
-        },
-      }
-    );
+    writeContract({
+      address: token.address as `0x${string}`,
+      abi: tokenAbi,
+      functionName: "transfer",
+      args: [address, amount],
+    });
   };
 
   return (
