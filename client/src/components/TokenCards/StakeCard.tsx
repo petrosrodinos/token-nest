@@ -5,9 +5,13 @@ import { CardContent, CardFooter } from "../ui/card";
 
 interface TokenCardProps {
   token: Token;
+  onClaimToken: (token: Token) => void;
 }
 
-const TokenCardStake: React.FC<TokenCardProps> = ({ token: {} }) => {
+const TokenCardStake: React.FC<TokenCardProps> = ({ token, onClaimToken }) => {
+  const handleClaimToken = () => {
+    onClaimToken(token);
+  };
   return (
     <>
       <CardContent className="flex flex-col items-center space-y-2">
@@ -20,8 +24,8 @@ const TokenCardStake: React.FC<TokenCardProps> = ({ token: {} }) => {
       </CardContent>
 
       <CardFooter>
-        <Button variant="default" className="w-full">
-          Unstake
+        <Button onClick={handleClaimToken} variant="default" className="w-full">
+          Claim
         </Button>
       </CardFooter>
     </>
