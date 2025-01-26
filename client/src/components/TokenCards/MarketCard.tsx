@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Token } from "../../interfaces/token";
 import { Button } from "../ui/button";
 import { CardContent, CardFooter } from "../ui/card";
 import { useAccount } from "wagmi";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../components/ui/dialog";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
 
 interface TokenCardProps {
   token: Token;
@@ -11,9 +22,14 @@ interface TokenCardProps {
 
 const TokenCardMarket: React.FC<TokenCardProps> = ({ token, onBuyToken }) => {
   const { isConnected } = useAccount();
+  const [amount, setAmount] = useState<string>("");
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(e.target.value);
+  };
 
   const handleClick = () => {
-    onBuyToken(token, "10");
+    onBuyToken(token, amount);
   };
 
   return (
@@ -26,9 +42,39 @@ const TokenCardMarket: React.FC<TokenCardProps> = ({ token, onBuyToken }) => {
       </CardContent>
 
       <CardFooter>
-        <Button disabled={!isConnected} onClick={handleClick} variant="default" className="w-full">
-          Buy
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button disabled={!isConnected} variant="default" className="w-full">
+              Buy
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Buy Tokens</DialogTitle>
+              <DialogDescription>Enter the amount of tokens you want to buy.</DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="amount">Amount</Label>
+                <Input
+                  onChange={handleAmountChange}
+                  type="number"
+                  placeholder="amount"
+                  id="amount"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                disabled={!isConnected || !amount || parseFloat(amount) > token.supply}
+                onClick={handleClick}
+                type="submit"
+              >
+                Buy
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </CardFooter>
     </>
   );
