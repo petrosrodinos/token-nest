@@ -25,7 +25,7 @@ const UserTokens: FC = () => {
   };
 
   return (
-    <div className="gap-5 flex flex-wrap">
+    <>
       <Spinner loading={isConfirming || isPending} color="blue" />
       <Message
         visible={!!stakeError}
@@ -39,10 +39,12 @@ const UserTokens: FC = () => {
         title="Success"
         description="Tokens staked successfuly."
       />
-      <TokenCardLayout token={token}>
-        <BoughtCard onStateToken={handleStakeToken} token={token} />
-      </TokenCardLayout>
-    </div>
+      <div className="mt-2 gap-5 flex flex-column flex-wrap">
+        <TokenCardLayout token={token}>
+          <BoughtCard onStateToken={handleStakeToken} token={token} />
+        </TokenCardLayout>
+      </div>
+    </>
   );
 };
 

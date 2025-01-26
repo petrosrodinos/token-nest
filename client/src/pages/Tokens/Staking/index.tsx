@@ -25,7 +25,7 @@ const Staking: FC = () => {
   };
 
   return (
-    <div className="gap-5 flex flex-wrap">
+    <>
       <Spinner loading={isConfirming || isPending} color="blue" />
       <Message
         visible={!!stakeError}
@@ -39,10 +39,12 @@ const Staking: FC = () => {
         title="Success"
         description="Tokens claimed successfuly."
       />
-      <TokenCardLayout token={token}>
-        <StakeCard onClaimToken={handleClaimToken} token={token} />
-      </TokenCardLayout>
-    </div>
+      <div className="mt-2 gap-5 flex flex-wrap">
+        <TokenCardLayout token={token}>
+          <StakeCard onClaimToken={handleClaimToken} token={token} />
+        </TokenCardLayout>
+      </div>
+    </>
   );
 };
 
