@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import TokenCardLayout from "../../../components/TokenCards";
 import BoughtCard from "../../../components/TokenCards/BoughtCard";
 import { BoughtToken, Token } from "../../../interfaces/token";
@@ -26,6 +26,7 @@ const UserTokens: FC = () => {
   } = useQuery({
     queryKey: ["tokens"],
     queryFn: () => getUserTokens(address?.toString()!, chain?.name!),
+    retry: 1,
   });
 
   const handleStakeToken = (token: Token, amount: string) => {
@@ -36,10 +37,6 @@ const UserTokens: FC = () => {
       args: [amount],
     });
   };
-
-  useEffect(() => {
-    console.log("TOKENS", tokens);
-  }, [tokens]);
 
   return (
     <>
@@ -68,9 +65,6 @@ const UserTokens: FC = () => {
             <BoughtCard onStateToken={handleStakeToken} token={token} />
           </TokenCardLayout>
         ))}
-        {/* <TokenCardLayout token={token}>
-          <BoughtCard onStateToken={handleStakeToken} token={token} />
-        </TokenCardLayout> */}
       </div>
     </>
   );
