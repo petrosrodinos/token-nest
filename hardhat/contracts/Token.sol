@@ -13,7 +13,7 @@ contract Token is ERC20, Ownable, ERC20Permit {
     constructor(address initialOwner, uint256 initialSupply, string memory name, string memory symbol)
         ERC20(name, symbol)
         Ownable(initialOwner)
-        ERC20Permit("Token")
+        ERC20Permit(name)
     {
         _mint(address(this), initialSupply * 10 ** decimals());
     }

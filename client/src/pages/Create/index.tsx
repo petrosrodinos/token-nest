@@ -30,6 +30,7 @@ export default function CreateToken() {
   });
 
   const { openConnectModal } = useConnectModal();
+  const contractAddress = useContractAddress();
 
   const { data: hash, error, isPending, writeContract } = useWriteContract();
 
@@ -37,14 +38,21 @@ export default function CreateToken() {
     hash,
   });
 
-  const contractAddress = useContractAddress();
+  // useWatchContractEvent({
+  //   address: contractAddress,
+  //   abi: tokenFactoryAbi,
+  //   eventName: "TokenCreated",
+  //   onLogs(logs) {
+  //     console.log("New logs!", logs);
+  //   },
+  // });
 
   function onSubmit(data: z.infer<typeof createTokenSchema>) {
     if (!contractAddress) {
       openConnectModal?.();
       return;
     }
-    console.log("ASD", data);
+
     writeContract(
       {
         address: contractAddress,
