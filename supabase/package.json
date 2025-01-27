@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "deploy": "npx supabase functions deploy createToken --project-ref lrfkvajaqhamxzdlrcwj",
+    "deploy:createtoken": "npx supabase functions deploy createToken --project-ref lrfkvajaqhamxzdlrcwj",
+    "deploy:gettokens": "npx supabase functions deploy getTokens --project-ref lrfkvajaqhamxzdlrcwj",
     "serve": "npx supabase functions serve --no-verify-jwt",
     "start": "npx supabase start"
   },
