@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Token } from "../../interfaces/token";
+import { BoughtToken, Token } from "../../interfaces/token";
 import { Button } from "../ui/button";
 import { CardContent, CardFooter } from "../ui/card";
 import {
@@ -12,16 +12,15 @@ import {
   DialogTrigger,
 } from "../../components/ui/dialog";
 import { Label } from "@radix-ui/react-label";
-import { token } from "../../constants/tokens";
 import { Input } from "../ui/input";
 import { useAccount } from "wagmi";
 
 interface TokenCardProps {
-  token: Token;
+  token: BoughtToken;
   onStateToken: (token: Token, amount: string) => void;
 }
 
-const TokenCardBought: React.FC<TokenCardProps> = ({ token: {}, onStateToken }) => {
+const TokenCardBought: React.FC<TokenCardProps> = ({ token, onStateToken }) => {
   const { isConnected } = useAccount();
   const [amount, setAmount] = useState<string>("");
 
@@ -38,7 +37,7 @@ const TokenCardBought: React.FC<TokenCardProps> = ({ token: {}, onStateToken }) 
       <CardContent className="flex flex-col items-center space-y-2">
         <div className="bg-muted rounded-md px-4 py-2 text-center">
           <p className="text-sm font-medium text-foreground">Bought</p>
-          <p className="text-lg font-bold text-primary">5000</p>
+          <p className="text-lg font-bold text-primary break-words">{token.balance}</p>
         </div>
       </CardContent>
 
