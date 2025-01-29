@@ -18,6 +18,12 @@ contract Token is ERC20, Ownable, ERC20Permit {
         _mint(address(this), initialSupply * 10 ** decimals());
     }
 
+    function buyTokens(uint256 amount) external {
+        require(amount > 0, "Amount must be greater than 0");
+        require(balanceOf(address(this))>=amount,"Amount must be lower that balance");
+        _transfer(address(this), msg.sender, amount);
+
+    }
     function stake(uint256 amount) external {
         require(amount > 0,"Amount is <=0");
         require(balanceOf(msg.sender)>= amount,"Not Enough Balance");

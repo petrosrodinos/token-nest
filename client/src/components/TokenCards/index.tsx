@@ -1,7 +1,7 @@
 import React from "react";
 import { Token } from "../../interfaces/token";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { token } from "../../constants/tokens";
+import { tokenImage } from "../../constants/tokens";
 
 interface TokenCardProps {
   token: Token;
@@ -16,7 +16,7 @@ const TokenCardLayout: React.FC<TokenCardProps> = ({
     <Card className="hover:shadow-lg transition-shadow w-64">
       <CardHeader className="flex flex-col items-center">
         <img
-          src={imageUrl || token.imageUrl}
+          src={imageUrl || tokenImage}
           alt={`${name} logo`}
           className="w-16 h-16 rounded-full object-cover mb-4"
         />

@@ -15,3 +15,13 @@ export const getUserTokens = async (address:string,network:string) => {
             throw new Error(error?.message);
     }
 }
+
+// export const getUserStakedTokens = async (address:string,network:string) => {
+//     try {
+//         const data = getUserTokens(address,network);
+
+//     } catch (error:any) {
+//             throw new Error(error?.message);
+        
+//     }
+// }

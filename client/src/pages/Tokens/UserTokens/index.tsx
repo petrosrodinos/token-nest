@@ -9,6 +9,7 @@ import { Spinner } from "../../../components/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
 import { getUserTokens } from "../../../services/token";
 import { useAccount } from "wagmi";
+// import { BoughtTokens } from "../../../constants/tokens";
 
 const UserTokens: FC = () => {
   const { address, chain } = useAccount();
@@ -42,6 +43,12 @@ const UserTokens: FC = () => {
     <>
       <Spinner loading={isConfirming || isPending || isGettingTokens} color="blue" />
       <Message
+        visible={tokens?.length === 0}
+        variant="default"
+        title="Warning"
+        description="You have no tokens."
+      />
+      <Message
         visible={isError}
         variant="destructive"
         title="Warning"
@@ -65,6 +72,11 @@ const UserTokens: FC = () => {
             <BoughtCard onStateToken={handleStakeToken} token={token} />
           </TokenCardLayout>
         ))}
+        {/* {BoughtTokens?.map((token: BoughtToken, index: number) => (
+          <TokenCardLayout key={index} token={token}>
+            <BoughtCard onStateToken={handleStakeToken} token={token} />
+          </TokenCardLayout>
+        ))} */}
       </div>
     </>
   );
