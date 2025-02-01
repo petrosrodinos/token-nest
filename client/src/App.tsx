@@ -1,11 +1,11 @@
 import "./App.css";
-import NavBar from "./components/NavBar";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import { AppSidebar } from "./components/SideBar";
 import CreateToken from "./pages/Create";
 import Market from "./pages/Market";
 import Tokens from "./pages/Tokens";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
